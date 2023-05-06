@@ -26,6 +26,23 @@ class Car extends Model
     ];
 
     /**
+     * The attributes that should be casted to native types
+     */
+    protected $casts = [
+        'name' => 'string',
+        'value' => 'float',
+        'color' => 'string',
+        'year' => 'integer',
+        'brand' => 'string',
+        'kilometers' => 'float',
+        'transmision_type' => 'string',
+        'doors' => 'integer',
+        'fuel_type' => 'string',
+        'air_conditioning' => 'boolean',
+    ];
+
+
+    /**
      * Enums.
      */
     const BRAND_POSSILITIES = [
@@ -44,4 +61,18 @@ class Car extends Model
     const TRANSMISION_TYPE_POSSILITIES = ['MANUAL', 'AUTOMATIC'];
 
     const FUEL_TYPE_POSSILITIES = ['FLEX', 'GASOLINE', 'ETHANOL'];
+
+    /**
+     * Relationships.
+     */
+
+    public function rents()
+    {
+        return $this->hasMany(Rent::class);
+    }
+
+    public function nextsRentDays()
+    {
+        return $this->hasManyThrough(RentDay::class, Rent::class)->where('rent_days.date', '>=' , date('Y-m-d'));
+    }
 }

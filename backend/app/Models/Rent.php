@@ -19,4 +19,15 @@ class Rent extends Model
         'end_date',
         'expired',
     ];
+
+    /**
+     * The attributes that should be casted to native types
+     */
+    protected $casts = [
+        'user_id' => 'integer',
+        'car_id' => 'integer',
+        'start_date' => 'string',
+        'end_date' => 'string',
+        'expired' => 'boolean',
+    ];
 }

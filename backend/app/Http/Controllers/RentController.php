@@ -21,6 +21,6 @@ class RentController extends Controller
     public function getRentsByUserId(int $userId){
         $this->authorize('viewRentsByUser', [Rent::class, $userId]);
 
-        return response()->json($this->rentRepository->getRentsByUserId($userId));
+        return response()->json($this->rentRepository->getRentsByUserId($userId), 200);
     }
 }

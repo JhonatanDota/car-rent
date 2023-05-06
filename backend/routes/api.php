@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\RentController;
+use App\Http\Controllers\CarController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,5 +25,12 @@ Route::group(['middleware' => 'jwt.auth'], function () {
     Route::prefix('rents')->group(function () {
         Route::get('/', [RentController::class,  'getAllRents']);
         Route::get('user/{userId}', [RentController::class,  'getRentsByUserId']);
+    });
+
+    Route::prefix('cars')->group(function () {
+        Route::get('/', [CarController::class,  'getAllCars']);
+        Route::get('/{carId}', [CarController::class,  'getCarById']);
+
+        Route::get('/{carId}/nexts-rent-days', [CarController::class,  'getNextsRentDaysByCarId']);
     });
 });

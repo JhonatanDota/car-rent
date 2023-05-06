@@ -16,7 +16,7 @@ class CreateRentDaysTable extends Migration
         Schema::create('rent_days', function (Blueprint $table) {
             $table->id();
             $table->integer('rent_id')->unsigned();
-            $table->foreign('rent_id')->references('id')->on('rents');
+            $table->foreign('rent_id')->references('id')->on('rents')->onDelete('CASCADE');
             $table->date('date');
             $table->timestamps();
         });
