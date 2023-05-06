@@ -1,12 +1,10 @@
 <?php
 
-
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\ClientController;
-use App\Http\Controllers\CompanyController;
-use App\Http\Controllers\ContractController;
+use App\Http\Controllers\RentController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -22,7 +20,9 @@ Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
 
 
-
 Route::group(['middleware' => 'jwt.auth'], function () {
-    
+    Route::prefix('rents')->group(function () {
+        Route::get('/', [RentController::class,  'getAllRents']);
+        Route::get('user/{userId}', [RentController::class,  'getRentsByUserId']);
+    });
 });
