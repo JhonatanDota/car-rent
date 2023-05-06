@@ -12,3 +12,6 @@ sh:
 
 sh-front:
 	docker-compose exec frontend bash
+
+test-back:
+	docker-compose exec backend bash -c "php artisan test"
