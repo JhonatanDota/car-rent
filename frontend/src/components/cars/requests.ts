@@ -8,7 +8,7 @@ export async function getCars() {
   return response.data;
 }
 
-// export async function getCarsByPage(url) {
-//     const response = await axios.get(url, { headers: HEADER });
-//     return response;
-// }
+export async function getCarsByPage(url: string) {
+  const response = await axios.get(url);
+  return response.data;
+}

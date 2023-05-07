@@ -1,4 +1,5 @@
 export default interface CarModel {
+  id: number,
   name: string;
   value: number;
   color: string;
