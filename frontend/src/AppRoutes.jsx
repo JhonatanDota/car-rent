@@ -9,6 +9,7 @@ export default function AppRoutes(){
         <Header/>
         <Routes>
           <Route path="/cars" element={<CarsList />} />
+          <Route path="/car/{id}" element={<CarsList />} />
         </Routes>
       </BrowserRouter>
     );

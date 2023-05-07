@@ -59,12 +59,17 @@ export default function CarsList() {
 
   function handleNextPageButton() {
     handleChangePage();
-    fetchCarsByPage(nextPage);
+
+    setTimeout(function () {
+      fetchCarsByPage(nextPage);
+    }, 1000);
   }
 
   function handlePreviousPage() {
     handleChangePage();
-    fetchCarsByPage(previousPage);
+    setTimeout(function () {
+      fetchCarsByPage(previousPage);
+    }, 1000);
   }
 
   useEffect(() => {
