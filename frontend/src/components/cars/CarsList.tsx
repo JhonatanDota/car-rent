@@ -15,12 +15,14 @@ import {
   CAR_TRANSMITIONS,
 } from "../../readables/carReadables";
 import CarModel from "../../models/CarModel";
+import CarsSkeleton from "./CarsSkeleton";
 import { CarsFilters } from "./CarsFilters";
 
 export default function CarsList() {
   const [cars, setCars] = useState<CarModel[]>([]);
-  const [nextPage, setNextPage] = useState("");
-  const [previousPage, setPreviousPage] = useState("");
+  const [nextPage, setNextPage] = useState<string>("");
+  const [previousPage, setPreviousPage] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   async function fetchCars() {
     try {
@@ -29,6 +31,8 @@ export default function CarsList() {
       setCars(carsResponse.data);
       setNextPage(carsResponse.next_page_url);
       setPreviousPage(carsResponse.prev_page_url);
+
+      setIsLoading(false);
     } catch {}
   }
 
@@ -39,24 +43,27 @@ export default function CarsList() {
       setCars(carsResponse.data);
       setNextPage(carsResponse.next_page_url);
       setPreviousPage(carsResponse.prev_page_url);
+
+      setIsLoading(false);
     } catch {}
   }
 
-  function handleNextPageButton() {
+  function handleChangePage() {
+    setIsLoading(true);
+
     window.scrollTo({
       top: 0,
       behavior: "smooth",
     });
+  }
 
+  function handleNextPageButton() {
+    handleChangePage();
     fetchCarsByPage(nextPage);
   }
 
   function handlePreviousPage() {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-
+    handleChangePage();
     fetchCarsByPage(previousPage);
   }
 
@@ -67,71 +74,80 @@ export default function CarsList() {
   return (
     <div className="flex flex-col p-8 max-w-5xl m-auto">
       <CarsFilters />
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-        {cars.map((car) => (
-          <div key={car.id} className="flex flex-col gap-y-4 box-sh shadow-2xl	">
-            <img className="rounded-xl" src={car.image} alt="" />
-            <div className="flex flex-col p-2 gap-1">
-              <div className="flex flex-col gap-y-2 items-center lg:items-start">
-                <h3 className="text-lg font-bold">{`${BRANDS[car.brand]} - ${
-                  car.name
-                }`}</h3>
+      {isLoading ? (
+        <CarsSkeleton />
+      ) : (
+        <div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {cars.map((car) => (
+              <div
+                key={car.id}
+                className="flex flex-col gap-y-4 box-sh shadow-2xl	"
+              >
+                <img className="rounded-xl" src={car.image} alt="" />
+                <div className="flex flex-col p-2 gap-1">
+                  <div className="flex flex-col gap-y-2 items-center lg:items-start">
+                    <h3 className="text-lg font-bold">{`${
+                      BRANDS[car.brand]
+                    } - ${car.name}`}</h3>
 
-                <h3 className="text-2xl font-bold">
-                  {parseMonetaryValue(car.value)}{" "}
-                  <span className="text-sm"> / dia</span>
-                </h3>
-              </div>
-
-              <div className="flex p-4 justify-between">
-                <div className="flex flex-col">
-                  <div className="flex items-center gap-2 text-lg">
-                    <BsSpeedometer2 />
-                    <h4>{car.kilometers}</h4>
+                    <h3 className="text-2xl font-bold">
+                      {parseMonetaryValue(car.value)}{" "}
+                      <span className="text-sm"> / dia</span>
+                    </h3>
                   </div>
 
-                  <div className="flex items-center gap-2 text-lg">
-                    <BsCalendar2 />
-                    <h4>{car.year}</h4>
+                  <div className="flex p-4 justify-between">
+                    <div className="flex flex-col">
+                      <div className="flex items-center gap-2 text-lg">
+                        <BsSpeedometer2 />
+                        <h4>{car.kilometers}</h4>
+                      </div>
+
+                      <div className="flex items-center gap-2 text-lg">
+                        <BsCalendar2 />
+                        <h4>{car.year}</h4>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col">
+                      <div className="flex items-center gap-2 text-lg">
+                        <BsGear />
+                        <h4>{CAR_TRANSMITIONS[car.transmision_type]}</h4>
+                      </div>
+
+                      <div className="flex items-center gap-2 text-lg">
+                        <BsFuelPump />
+                        <h4>{FUEL_TYPES[car.fuel_type]}</h4>
+                      </div>
+                    </div>
                   </div>
                 </div>
-
-                <div className="flex flex-col">
-                  <div className="flex items-center gap-2 text-lg">
-                    <BsGear />
-                    <h4>{CAR_TRANSMITIONS[car.transmision_type]}</h4>
-                  </div>
-
-                  <div className="flex items-center gap-2 text-lg">
-                    <BsFuelPump />
-                    <h4>{FUEL_TYPES[car.fuel_type]}</h4>
-                  </div>
-                </div>
               </div>
-            </div>
+            ))}
           </div>
-        ))}
-      </div>
-      <div className="flex justify-evenly font-bold mt-5">
-        {previousPage && (
-          <button
-            className="flex items-center"
-            onClick={() => handlePreviousPage()}
-          >
-            <BsFillArrowLeftSquareFill size={20} />
-            <span className="ml-2">Anterior</span>
-          </button>
-        )}
-        {nextPage && (
-          <button
-            className="flex items-center"
-            onClick={() => handleNextPageButton()}
-          >
-            <span className="mr-2">Próximo</span>
-            <BsFillArrowRightSquareFill size={20} />
-          </button>
-        )}
-      </div>
+          <div className="flex justify-evenly font-bold mt-5">
+            {previousPage && (
+              <button
+                className="flex items-center"
+                onClick={() => handlePreviousPage()}
+              >
+                <BsFillArrowLeftSquareFill size={20} />
+                <span className="ml-2">Anterior</span>
+              </button>
+            )}
+            {nextPage && (
+              <button
+                className="flex items-center"
+                onClick={() => handleNextPageButton()}
+              >
+                <span className="mr-2">Próximo</span>
+                <BsFillArrowRightSquareFill size={20} />
+              </button>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }
