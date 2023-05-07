@@ -23,6 +23,7 @@ class Car extends Model
         'doors',
         'fuel_type',
         'air_conditioning',
+        'image',
     ];
 
     /**
@@ -39,6 +40,7 @@ class Car extends Model
         'doors' => 'integer',
         'fuel_type' => 'string',
         'air_conditioning' => 'boolean',
+        'image' => 'string',
     ];
 
 

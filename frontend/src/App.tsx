@@ -1,9 +1,9 @@
-import React from 'react';
+import AppRoutes from './AppRoutes';
 
 function App() {
   return (
     <div>
-      <h1 className="text-red-300">abada</h1>
+      <AppRoutes/>
     </div>
   );
 }

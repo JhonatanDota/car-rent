@@ -43,6 +43,7 @@ class CreateCarsTable extends Migration
                 'ETHANOL',
             ]);
             $table->boolean('air_conditioning');
+            $table->string('image');
             $table->timestamps();
         });
     }

@@ -32,6 +32,7 @@ class CarFactory extends Factory
             'doors' => $this->faker->randomNumber(2),
             'fuel_type' => $this->faker->randomElement(Car::FUEL_TYPE_POSSILITIES),
             'air_conditioning' => true,
+            'image' => $this->faker->imageUrl(),
         ];
     }
 }

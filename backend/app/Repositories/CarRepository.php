@@ -7,7 +7,7 @@ use App\Interfaces\CarRepositoryInterface;
 
 class CarRepository implements CarRepositoryInterface
 {
-    public function getAllCars(int $quantityByPage = 8) 
+    public function getAllCars(int $quantityByPage = 9) 
     {
         return Car::paginate($quantityByPage);
     }
