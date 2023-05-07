@@ -89,7 +89,9 @@ export default function CarsList() {
                 key={car.id}
                 className="flex flex-col gap-y-4 box-sh shadow-2xl	"
               >
-                <img className="rounded-xl" src={car.image} alt="" />
+                <div className="w-full h-60 p-2">
+                  <img className="rounded-xl" src={car.image} alt="" />
+                </div>
                 <div className="flex flex-col p-2 gap-1">
                   <div className="flex flex-col gap-y-2 items-center lg:items-start">
                     <h3 className="text-lg font-bold">{`${
