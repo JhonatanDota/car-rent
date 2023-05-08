@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 import { getCarById, getNextRentDaysByCarId } from "./requests";
 import CarModel from "../../models/CarModel";
 import { CAR_TRANSMITIONS, FUEL_TYPES } from "../../readables/carReadables";
+import RentDaysModel from "../../models/RentDaysModel";
+import CarRentCalendar from "./CarRentCalendar";
 import {
   BsSpeedometer2,
   BsCalendar2,
@@ -16,6 +18,7 @@ export default function CarCard() {
   const { id } = useParams();
 
   const [car, setCar] = useState<CarModel>();
+  const [disabledRentDays, setDisabledRentDays] = useState<Array<RentDaysModel>>([])
 
   async function fetchCar(id: number) {
     try {
@@ -27,7 +30,7 @@ export default function CarCard() {
   async function fetchNextRentDays(id: number) {
     try {
       const nextRentDaysResponse = await getNextRentDaysByCarId(id);
-      console.log(getNextRentDaysByCarId);
+      setDisabledRentDays(nextRentDaysResponse.data);
     } catch {}
   }
 
@@ -68,6 +71,11 @@ export default function CarCard() {
           </div>
         </div>
       )}
+      
+      {
+        disabledRentDays && <CarRentCalendar rawDisabledDates={disabledRentDays}/>
+      }
+
     </div>
   );
 }

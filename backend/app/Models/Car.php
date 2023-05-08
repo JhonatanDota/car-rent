@@ -75,6 +75,6 @@ class Car extends Model
 
     public function nextsRentDays()
     {
-        return $this->hasManyThrough(RentDay::class, Rent::class)->where('rent_days.date', '>=' , date('Y-m-d'));
+        return $this->hasManyThrough(RentDay::class, Rent::class)->where('rent_days.date', '>=' , date('Y-m-d'))->orderBy('rent_days.date', 'ASC');
     }
 }

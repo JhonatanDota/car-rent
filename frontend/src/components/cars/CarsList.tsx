@@ -91,7 +91,7 @@ export default function CarsList() {
                 className="flex flex-col gap-y-4 box-sh shadow-2xl	"
               >
                 <NavLink to={`/car/${car.id}`}>
-                  <div className="w-full h-60 p-2">
+                  <div className="md:w-full md:h-60 p-2">
                     <img className="rounded-xl" src={car.image} alt="" />
                   </div>
                 </NavLink>

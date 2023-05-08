@@ -24,7 +24,7 @@ class RentDayFactory extends Factory
     {
         return [
             'rent_id' => $this->faker->randomElement(Rent::get(['id'])),
-            'date' => $this->faker->date(),
+            'date' => $this->faker->dateTimeThisMonth('+30 days'),
         ];
     }
 }
