@@ -1,14 +1,73 @@
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import { getCarById, getNextRentDaysByCarId } from "./requests";
 import CarModel from "../../models/CarModel";
+import { CAR_TRANSMITIONS, FUEL_TYPES } from "../../readables/carReadables";
+import {
+  BsSpeedometer2,
+  BsCalendar2,
+  BsGear,
+  BsFuelPump,
+  BsDoorClosed,
+  BsCloudFog2
+} from "react-icons/bs";
 
-interface CarCardProps {
-  car: CarModel;
-}
+export default function CarCard() {
+  const { id } = useParams();
 
-export default function CarCard(props: CarCardProps) {
-    const {car} = props;
+  const [car, setCar] = useState<CarModel>();
 
-    return(
-        <div className="flex flex-col ">
+  async function fetchCar(id: number) {
+    try {
+      const carResponse = await getCarById(id);
+      setCar(carResponse.data);
+    } catch {}
+  }
+
+  async function fetchNextRentDays(id: number) {
+    try {
+      const nextRentDaysResponse = await getNextRentDaysByCarId(id);
+      console.log(getNextRentDaysByCarId);
+    } catch {}
+  }
+
+  useEffect(() => {
+    fetchCar(Number(id));
+    fetchNextRentDays(Number(id));
+  }, []);
+
+  function carInformationCard(
+    info: string,
+    value: string | number,
+    icon: React.ReactNode
+  ) {
+    return (
+      <div className="flex flex-col gap-y-2 text-sm md:text-lg items-center p-6 bg-slate-100 rounded-xl">
+        {icon}
+        <div className="flex flex-col items-center">
+          <span className="text-slate-500">{info}</span>
+          <span className="font-bold">{value}</span>
         </div>
+      </div>
     );
+  }
+
+  return (
+    <div className="p-8 max-w-3xl m-auto">
+      {car && (
+        <div className="flex flex-col items-center">
+          <img className="w-full" src={car.image} alt="" />
+
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 w-full mt-4">
+            {carInformationCard("Ano", car.year, <BsCalendar2 />)}
+            {carInformationCard("Km", car.kilometers, <BsSpeedometer2 />)}
+            {carInformationCard("Combustível", FUEL_TYPES[car.fuel_type], <BsFuelPump />)}
+            {carInformationCard("Transmissão", CAR_TRANSMITIONS[car.transmision_type], <BsGear />)}
+            {carInformationCard("Portas", car.doors, <BsDoorClosed />)}
+            {carInformationCard("Ar Condicionado", car.air_conditioning ? "Possui" : "Não Possui", <BsCloudFog2 />)}
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { NavLink } from "react-router-dom";
 import { getCars, getCarsByPage } from "./requests";
 import { parseMonetaryValue } from "../../functions/parsers";
 import {
@@ -89,9 +90,11 @@ export default function CarsList() {
                 key={car.id}
                 className="flex flex-col gap-y-4 box-sh shadow-2xl	"
               >
-                <div className="w-full h-60 p-2">
-                  <img className="rounded-xl" src={car.image} alt="" />
-                </div>
+                <NavLink to={`/car/${car.id}`}>
+                  <div className="w-full h-60 p-2">
+                    <img className="rounded-xl" src={car.image} alt="" />
+                  </div>
+                </NavLink>
                 <div className="flex flex-col p-2 gap-1">
                   <div className="flex flex-col gap-y-2 items-center lg:items-start">
                     <h3 className="text-lg font-bold">{`${
@@ -139,8 +142,8 @@ export default function CarsList() {
                 className="flex items-center"
                 onClick={() => handlePreviousPage()}
               >
-                <BsFillArrowLeftSquareFill size={20} />
-                <span className="ml-2">Anterior</span>
+                <BsFillArrowLeftSquareFill size={30} />
+                <span className="text-lg ml-2">Anterior</span>
               </button>
             )}
             {nextPage && (
@@ -148,8 +151,8 @@ export default function CarsList() {
                 className="flex items-center"
                 onClick={() => handleNextPageButton()}
               >
-                <span className="mr-2">Próximo</span>
-                <BsFillArrowRightSquareFill size={20} />
+                <span className="text-lg mr-2">Próximo</span>
+                <BsFillArrowRightSquareFill size={30} />
               </button>
             )}
           </div>

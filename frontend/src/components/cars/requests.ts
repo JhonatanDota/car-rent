@@ -8,6 +8,16 @@ export async function getCars() {
   return response.data;
 }
 
+export async function getCarById(id: number) {
+  const response = await axios.get(`${CARS_URL}${id}`);
+  return response;
+}
+
+export async function getNextRentDaysByCarId(id: number) {
+  const response = await axios.get(`${CARS_URL}${id}/nexts-rent-days`);
+  return response;
+}
+
 export async function getCarsByPage(url: string) {
   const response = await axios.get(url);
   return response.data;
