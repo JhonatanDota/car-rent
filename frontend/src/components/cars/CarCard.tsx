@@ -11,14 +11,16 @@ import {
   BsGear,
   BsFuelPump,
   BsDoorClosed,
-  BsCloudFog2
+  BsCloudFog2,
 } from "react-icons/bs";
 
 export default function CarCard() {
   const { id } = useParams();
 
   const [car, setCar] = useState<CarModel>();
-  const [disabledRentDays, setDisabledRentDays] = useState<Array<RentDaysModel>>([])
+  const [disabledRentDays, setDisabledRentDays] = useState<
+    Array<RentDaysModel>
+  >([]);
 
   async function fetchCar(id: number) {
     try {
@@ -64,18 +66,26 @@ export default function CarCard() {
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4 w-full mt-4">
             {carInformationCard("Ano", car.year, <BsCalendar2 />)}
             {carInformationCard("Km", car.kilometers, <BsSpeedometer2 />)}
-            {carInformationCard("Combustível", FUEL_TYPES[car.fuel_type], <BsFuelPump />)}
-            {carInformationCard("Transmissão", CAR_TRANSMITIONS[car.transmision_type], <BsGear />)}
+            {carInformationCard(
+              "Combustível",
+              FUEL_TYPES[car.fuel_type],
+              <BsFuelPump />
+            )}
+            {carInformationCard(
+              "Transmissão",
+              CAR_TRANSMITIONS[car.transmision_type],
+              <BsGear />
+            )}
             {carInformationCard("Portas", car.doors, <BsDoorClosed />)}
-            {carInformationCard("Ar Condicionado", car.air_conditioning ? "Possui" : "Não Possui", <BsCloudFog2 />)}
+            {carInformationCard(
+              "Ar Condicionado",
+              car.air_conditioning ? "Possui" : "Não Possui",
+              <BsCloudFog2 />
+            )}
           </div>
+          <CarRentCalendar rawDisabledDates={disabledRentDays} />
         </div>
       )}
-      
-      {
-        disabledRentDays && <CarRentCalendar rawDisabledDates={disabledRentDays}/>
-      }
-
     </div>
   );
 }
