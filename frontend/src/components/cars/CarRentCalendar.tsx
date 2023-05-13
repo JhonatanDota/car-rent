@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import moment from "moment";
+import { Dispatch, SetStateAction } from "react";
 import RentDaysModel from "../../models/RentDaysModel";
 import "@hassanmojab/react-modern-calendar-datepicker/lib/DatePicker.css";
 import {
@@ -8,6 +9,8 @@ import {
 } from "@hassanmojab/react-modern-calendar-datepicker";
 
 interface CarRentCalendarProps {
+  selectedDayRange: DayRange;
+  setSelectedDayRange: Dispatch<SetStateAction<DayRange>>;
   rawDisabledDates: Array<RentDaysModel>;
 }
 
@@ -18,14 +21,7 @@ interface FormatedToCalendarTypeInterface {
 }
 
 export default function CarRentCalendar(props: CarRentCalendarProps) {
-  const { rawDisabledDates } = props;
-
-  const defaultValue: DayRange = {
-    from: null,
-    to: null,
-  };
-  const [selectedDayRange, setSelectedDayRange] =
-    useState<DayRange>(defaultValue);
+  const { selectedDayRange, setSelectedDayRange, rawDisabledDates } = props;
 
   const [formattedDisabledDates, setFormattedDisabledDates] = useState<
     Array<FormatedToCalendarTypeInterface>
@@ -41,16 +37,13 @@ export default function CarRentCalendar(props: CarRentCalendarProps) {
   }
 
   useEffect(() => {
-    const formatedDatesList: FormatedToCalendarTypeInterface[] = rawDisabledDates.map((rawDisabledDate: RentDaysModel) =>{
-      return calendarFormatter(moment(rawDisabledDate.date));
-    });
+    const formatedDatesList: FormatedToCalendarTypeInterface[] =
+      rawDisabledDates.map((rawDisabledDate: RentDaysModel) => {
+        return calendarFormatter(moment(rawDisabledDate.date));
+      });
 
-    setFormattedDisabledDates(formatedDatesList)
+    setFormattedDisabledDates(formatedDatesList);
   }, [rawDisabledDates]);
-
-  useEffect(() => {
-    console.log(selectedDayRange)
-  }, [selectedDayRange]);
 
   return (
     <Calendar

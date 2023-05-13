@@ -6,6 +6,7 @@ import CarCardSkeleton from "./CarCardSkeleton";
 import { CAR_TRANSMITIONS, FUEL_TYPES } from "../../readables/carReadables";
 import RentDaysModel from "../../models/RentDaysModel";
 import CarRentCalendar from "./CarRentCalendar";
+import { DayRange } from "@hassanmojab/react-modern-calendar-datepicker";
 import {
   BsSpeedometer2,
   BsCalendar2,
@@ -20,6 +21,10 @@ export default function CarCard() {
   const { id } = useParams();
 
   const [car, setCar] = useState<CarModel>();
+  const [selectedDayRange, setSelectedDayRange] = useState<DayRange>({
+    from: null,
+    to: null,
+  });
   const [disabledRentDays, setDisabledRentDays] = useState<
     Array<RentDaysModel>
   >([]);
@@ -65,7 +70,9 @@ export default function CarCard() {
         <div className="flex flex-col items-center">
           <img className="w-full" src={car.image} alt="" />
           <div className="p-2 mt-8 w-full bg-green-200 text-center rounded-lg">
-            <span className="font-bold text-lg md:text-2xl">{parseMonetaryValue(car.value)}</span>
+            <span className="font-bold text-lg md:text-2xl">
+              {parseMonetaryValue(car.value)}
+            </span>
             <span className="text-sm"> / dia</span>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4 w-full mt-4">
@@ -88,10 +95,14 @@ export default function CarCard() {
               <BsCloudFog2 />
             )}
           </div>
-          <CarRentCalendar rawDisabledDates={disabledRentDays} />
+          <CarRentCalendar
+            selectedDayRange={selectedDayRange}
+            setSelectedDayRange={setSelectedDayRange}
+            rawDisabledDates={disabledRentDays}
+          />
         </div>
-      ):(
-        <CarCardSkeleton/>
+      ) : (
+        <CarCardSkeleton />
       )}
     </div>
   );
