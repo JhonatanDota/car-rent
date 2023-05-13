@@ -16,7 +16,7 @@ import {
   CAR_TRANSMITIONS,
 } from "../../readables/carReadables";
 import CarModel from "../../models/CarModel";
-import CarsSkeleton from "./CarsSkeleton";
+import CarsListSkeleton from "./CarsListSkeleton";
 import { CarsFilters } from "./CarsFilters";
 
 export default function CarsList() {
@@ -81,7 +81,7 @@ export default function CarsList() {
     <div className="flex flex-col p-8 max-w-5xl m-auto">
       <CarsFilters />
       {isLoading ? (
-        <CarsSkeleton />
+        <CarsListSkeleton />
       ) : (
         <div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

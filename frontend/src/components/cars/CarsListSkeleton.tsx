@@ -1,4 +1,4 @@
-export default function CarsSkeleton() {
+export default function CarsListSkeleton() {
   const carsQuantity = 12;
 
   return (

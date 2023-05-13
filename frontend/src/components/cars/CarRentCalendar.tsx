@@ -48,6 +48,10 @@ export default function CarRentCalendar(props: CarRentCalendarProps) {
     setFormattedDisabledDates(formatedDatesList)
   }, [rawDisabledDates]);
 
+  useEffect(() => {
+    console.log(selectedDayRange)
+  }, [selectedDayRange]);
+
   return (
     <Calendar
       value={selectedDayRange}
@@ -56,7 +60,6 @@ export default function CarRentCalendar(props: CarRentCalendarProps) {
       minimumDate={calendarFormatter(moment())}
       colorPrimary="#0fbcf9"
       colorPrimaryLight="rgba(75, 207, 250, 0.4)"
-      shouldHighlightWeekends
     />
   );
 }
