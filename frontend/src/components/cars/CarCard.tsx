@@ -16,6 +16,7 @@ import {
   BsCloudFog2,
 } from "react-icons/bs";
 import { parseMonetaryValue } from "../../functions/parsers";
+import CarRentData from "./CarRentData";
 
 export default function CarCard() {
   const { id } = useParams();
@@ -100,6 +101,7 @@ export default function CarCard() {
             setSelectedDayRange={setSelectedDayRange}
             rawDisabledDates={disabledRentDays}
           />
+          <CarRentData dayRange={selectedDayRange}/>
         </div>
       ) : (
         <CarCardSkeleton />
