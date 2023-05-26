@@ -23,7 +23,7 @@ class CarFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
-            'value' => $this->faker->randomFloat(2, 100, 10000),
+            'value' => $this->faker->randomFloat(2, 100, 1000),
             'color' => $this->faker->colorName(),
             'year' => $this->faker->year(),
             'brand' => $this->faker->randomElement(Car::BRAND_POSSILITIES),

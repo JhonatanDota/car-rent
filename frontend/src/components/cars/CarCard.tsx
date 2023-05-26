@@ -55,7 +55,7 @@ export default function CarCard() {
     icon: React.ReactNode
   ) {
     return (
-      <div className="flex flex-col gap-y-2 text-sm md:text-lg items-center p-6 bg-slate-100 rounded-xl">
+      <div className="flex flex-col gap-y-2 text-sm md:text-lg items-center text-center p-6 bg-slate-100 rounded-xl">
         {icon}
         <div className="flex flex-col items-center">
           <span className="text-slate-500">{info}</span>
@@ -101,7 +101,7 @@ export default function CarCard() {
             setSelectedDayRange={setSelectedDayRange}
             rawDisabledDates={disabledRentDays}
           />
-          <CarRentData dayRange={selectedDayRange}/>
+          <CarRentData dayRange={selectedDayRange} carRentDayValue={car.value}/>
         </div>
       ) : (
         <CarCardSkeleton />
