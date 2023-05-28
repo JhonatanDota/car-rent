@@ -11,13 +11,16 @@ export default function Header() {
             Carros
           </button>
         </NavLink>
-
+        <NavLink to="/login">
         <button className="font-bold text-sm md:text-lg p-2 bg-white rounded-lg">
           Login
         </button>
+        </NavLink>
+        <NavLink to="/register">
         <button className="font-bold text-sm md:text-lg p-2 bg-white rounded-lg">
           Cadastro
         </button>
+        </NavLink>
       </div>
     </div>
   );
