@@ -64,6 +64,17 @@ export default function CarRentData(props: CarRentDataProps) {
 
   return (
     <div className="flex flex-col gap-8">
+      {rentTotalValue && (
+        <div className="flex flex-col items-center gap-2">
+          <label className="text-lg">Valor total do aluguel</label>
+          <input
+            className="text-center text-2xl font-extrabold w-full pointer-events-none"
+            type="text"
+            value={rentTotalValue}
+            readOnly
+          />
+        </div>
+      )}
       <div className="flex justify-evenly">
         <div className="flex flex-col items-center">
           <label className="text-lg">Início</label>
@@ -84,17 +95,6 @@ export default function CarRentData(props: CarRentDataProps) {
           />
         </div>
       </div>
-      {rentTotalValue && (
-        <div className="flex flex-col items-center">
-          <label className="text-lg">Valor total do aluguel</label>
-          <input
-            className="text-center text-lg font-bold w-full pointer-events-none"
-            type="text"
-            value={rentTotalValue}
-            readOnly
-          />
-        </div>
-      )}
     </div>
   );
 }
