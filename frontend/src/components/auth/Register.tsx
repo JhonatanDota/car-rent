@@ -1,8 +1,13 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { BsPersonFill } from "react-icons/bs";
 import UserRegisterModel from "../../models/UserRegisterModel";
+import { registerUser } from "./requests";
+import { badRequestErrorsTratative } from "../../functions/exceptions";
 
 export default function Register() {
+  const [registerServerErrors, setRegisterServerErrors] = useState <Array<string>>([]);
+
   const {
     register,
     handleSubmit,
@@ -11,24 +16,44 @@ export default function Register() {
   } = useForm<UserRegisterModel>();
 
   async function onSubmit(event: UserRegisterModel) {
-    let data = {
+    let userData = {
       first_name: event.first_name,
       last_name: event.last_name,
       email: event.email,
       password: event.password,
     };
+
+    try {
+      await registerUser(userData)
+        .then(_ => {
+          setRegisterServerErrors([]);
+          reset();
+        })
+        .catch((error) => {
+          let response = error.response;
+          let statusCode = response.status;
+
+          if(statusCode == 400)
+            setRegisterServerErrors(badRequestErrorsTratative(response.data));
+          else
+            console.log("teste")
+        });
+    } catch {}
   }
 
   return (
-    <div className="flex flex-col p-8">
+    <div className="flex flex-col p-10 w-full">
+      {registerServerErrors.map((error) => (
+        <h1>{error}</h1>
+      ))}
       <form
         onSubmit={handleSubmit(onSubmit)}
         action=""
-        className="flex flex-col gap-4"
+        className="flex flex-col gap-y-6"
       >
         <div className="flex flex-col gap-2">
-          <div className="border-[3px] justify-center flex items-center rounded-md shadow-md">
-            <div className="flex justify-center items-center w-8 lg:w-14 h-10 lg:h-14 text-lg lg:text-3xl bg-gray-300 rounded-l-sm">
+          <div className="border-[3px] justify-center flex items-center rounded-md shadow-md ">
+            <div className="flex justify-center items-center w-8 lg:w-14 h-10 lg:h-14 text-lg lg:text-3xl bg-gray-200 rounded-l-sm">
               <BsPersonFill className="text-gray-800" />
             </div>
             <input
@@ -74,7 +99,7 @@ export default function Register() {
 
         <div className="flex flex-col gap-2">
           <div className="border-[3px] justify-center flex items-center rounded-md shadow-md">
-            <div className="flex justify-center items-center w-8 lg:w-14 h-10 lg:h-14 text-lg lg:text-3xl bg-gray-300 rounded-l-sm">
+            <div className="flex justify-center items-center w-8 lg:w-14 h-10 lg:h-14 text-lg lg:text-3xl bg-gray-200 rounded-l-sm">
               <BsPersonFill className="text-gray-800" />
             </div>
             <input
@@ -120,7 +145,7 @@ export default function Register() {
 
         <div className="flex flex-col gap-2">
           <div className="border-[3px] justify-center flex items-center rounded-md shadow-md">
-            <div className="flex justify-center items-center w-8 lg:w-14 h-10 lg:h-14 text-lg lg:text-3xl bg-gray-300 rounded-l-sm">
+            <div className="flex justify-center items-center w-8 lg:w-14 h-10 lg:h-14 text-lg lg:text-3xl bg-gray-200 rounded-l-sm">
               <BsPersonFill className="text-gray-800" />
             </div>
             <input
@@ -151,7 +176,7 @@ export default function Register() {
 
         <div className="flex flex-col gap-2">
           <div className="border-[3px] justify-center flex items-center rounded-md shadow-md">
-            <div className="flex justify-center items-center w-8 lg:w-14 h-10 lg:h-14 text-lg lg:text-3xl bg-gray-300 rounded-l-sm">
+            <div className="flex justify-center items-center w-8 lg:w-14 h-10 lg:h-14 text-lg lg:text-3xl bg-gray-200 rounded-l-sm">
               <BsPersonFill className="text-gray-800" />
             </div>
             <input
