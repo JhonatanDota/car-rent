@@ -5,6 +5,7 @@ import CarCard from "./components/cars/CarCard";
 import { authCheck, isLogged } from "./config";
 
 import Header from "./components/Header";
+import Home from "./components/Home";
 import Dashboard from "./components/dashboard/Dashboard";
 
 export default function AppRoutes(){
@@ -12,6 +13,7 @@ export default function AppRoutes(){
       <BrowserRouter>
         <Header/>
         <Routes>
+          <Route path="/" element={<Home />} />
           <Route path="/login" element={isLogged()} />
           <Route path="/register" element={<Register />} />
           <Route path="/dashboard" element={authCheck(<Dashboard />)} />

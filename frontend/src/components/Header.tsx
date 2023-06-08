@@ -11,6 +11,13 @@ export default function Header() {
     <div className="flex items-center justify-around h-20 bg-slate-400">
       <img className="h-[80%] md:h-[100%] p-2" src={headerIcon} alt="icon" />
       <div className="flex justify-between gap-x-4">
+
+      <NavLink to="/">
+          <button className="font-bold text-sm md:text-lg p-2 bg-purple-200 rounded-lg">
+            Início
+          </button>
+        </NavLink>
+
         <NavLink to="/cars">
           <button className="font-bold text-sm md:text-lg p-2 bg-purple-200 rounded-lg">
             Carros

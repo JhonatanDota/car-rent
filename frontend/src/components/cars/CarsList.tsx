@@ -88,7 +88,7 @@ export default function CarsList() {
             {cars.map((car) => (
               <div
                 key={car.id}
-                className="flex flex-col gap-y-4 box-sh shadow-2xl	"
+                className="flex flex-col gap-y-4 shadow-2xl"
               >
                 <NavLink to={`/car/${car.id}`}>
                   <div className="md:w-full md:h-60 p-2">
