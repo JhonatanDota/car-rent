@@ -1,5 +1,6 @@
 import { Navigate } from "react-router-dom";
 import Login from "./components/auth/Login";
+import UserModel from "./models/UserModel";
 
 export const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
@@ -8,11 +9,22 @@ export const HEADER = {
   Authorization: `Bearer ${getToken()}`,
 };
 
-function getToken() {
+export function getToken(): string | null {
   return localStorage.getItem("token");
 }
 
-export function authCheck(component) {
+export function getUser(): UserModel | null {
+  let user = localStorage.getItem("user");
+
+  if (user) {
+    const userModel: UserModel = JSON.parse(user);
+    return userModel;
+  }
+
+  return null;
+}
+
+export function authCheck(component: any) {
   return getToken() ? component : <Navigate to="/" />;
 }
 
