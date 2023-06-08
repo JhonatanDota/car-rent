@@ -19,7 +19,7 @@ class UserRequest extends FormRequest
             'first_name' => ['required', 'min:3', 'max:75', 'regex:/^[a-zA-ZÀ-ÖØ-öø-ÿ\s]+$/'],
             'last_name' => ['required', 'min:3', 'max:75', 'regex:/^[a-zA-ZÀ-ÖØ-öø-ÿ\s]+$/'],
             'email' => ['required', 'email', 'unique:users,email'],
-            'password' => ['required', 'regex:/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d$@$!%*#?&]{8,}$/'],
+            'password' => ['required', 'regex:/^.{8,}$/'],
         ];
     }
 
@@ -51,7 +51,7 @@ class UserRequest extends FormRequest
             'email.unique'         => 'Email já cadastrado.',
 
             'password.required'    => 'O campo Senha é obrigatório.',
-            'password.regex'       => 'A senha deve ter pelo menos 8 caracteres, pelo menos um número e pelo menos uma letra.',
+            'password.regex'       => 'A senha deve ter pelo menos 8 caracteres.',
         ];
     }
 }

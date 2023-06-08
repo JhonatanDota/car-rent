@@ -7,6 +7,7 @@ import {
   BsFillEnvelopeFill,
   BsFillEyeFill,
   BsFillEyeSlashFill,
+  BsFillExclamationCircleFill,
 } from "react-icons/bs";
 import UserRegisterModel from "../../models/UserRegisterModel";
 import { registerUser } from "./requests";
@@ -63,24 +64,32 @@ export default function Register() {
   }
 
   return (
-    <div className="flex flex-col p-10 w-full">
+    <div className="flex flex-col p-8 w-full">
       <Toaster />
-      <div className="flex flex-col mb-5">
-        <p className="text-xl text-center font-bold">Crie sua conta</p>
+      <div className="flex flex-col mb-4">
+        <p className="text-xl md:text-3xl text-center font-bold">Crie sua conta</p>
+      </div>
+      <div className="text-md font-bold m-3 md:text-lg">
+        {registerServerErrors.map((error) => (
+          <div className="flex justify-center items-center gap-x-2">
+            <p className="text-center">{error}</p>
+            <BsFillExclamationCircleFill color="red"/>
+          </div>
+        ))}
       </div>
       <form
         onSubmit={handleSubmit(onSubmit)}
         action=""
-        className="flex flex-col gap-y-6"
+        className="flex flex-col gap-y-6 md:w-1/2 md:m-auto md:gap-y-10"
       >
         <div className="flex flex-col gap-2">
           <div className="border-[3px] justify-center flex items-center rounded-md shadow-md ">
-            <div className="flex justify-center items-center w-8 lg:w-14 h-10 lg:h-14 text-lg lg:text-3xl bg-gray-200 rounded-l-sm">
+            <div className="flex justify-center items-center w-8 md:w-14 h-10 md:h-14 text-lg md:text-3xl bg-gray-200 rounded-l-sm">
               <BsPersonFill />
             </div>
             <input
               placeholder="Nome"
-              className="w-full font-bold px-3 h-10 lg:h-14 text-gray-800 text-md lg:text-2xl focus:outline-none"
+              className="w-full font-bold px-3 h-10 md:h-14 text-gray-800 text-md md:text-2xl focus:outline-none"
               type="text"
               autoComplete="nope"
               {...register("first_name", {
@@ -91,7 +100,7 @@ export default function Register() {
               })}
             />
           </div>
-          <div className="text-xs lg:text-xl text-center">
+          <div className="text-xs text-center md:text-lg">
             {errors?.first_name?.type === "required" && (
               <p className="font-bold">O campo Nome é obrigatório.</p>
             )}
@@ -115,12 +124,12 @@ export default function Register() {
 
         <div className="flex flex-col gap-2">
           <div className="border-[3px] justify-center flex items-center rounded-md shadow-md">
-            <div className="flex justify-center items-center w-8 lg:w-14 h-10 lg:h-14 text-lg lg:text-3xl bg-gray-200 rounded-l-sm">
+            <div className="flex justify-center items-center w-8 md:w-14 h-10 md:h-14 text-lg md:text-3xl bg-gray-200 rounded-l-sm">
               <BsFillPersonLinesFill />
             </div>
             <input
               placeholder="Sobrenome"
-              className="w-full font-bold px-3 h-10 lg:h-14 text-gray-800 text-md lg:text-2xl focus:outline-none"
+              className="w-full font-bold px-3 h-10 md:h-14 text-gray-800 text-md md:text-2xl focus:outline-none"
               type="text"
               autoComplete="nope"
               {...register("last_name", {
@@ -131,7 +140,7 @@ export default function Register() {
               })}
             />
           </div>
-          <div className="text-xs lg:text-xl text-center">
+          <div className="text-xs text-center md:text-lg">
             {errors?.last_name?.type === "required" && (
               <p className="font-bold">O campo Sobrenome é obrigatório.</p>
             )}
@@ -155,12 +164,12 @@ export default function Register() {
 
         <div className="flex flex-col gap-2">
           <div className="border-[3px] justify-center flex items-center rounded-md shadow-md">
-            <div className="flex justify-center items-center w-8 lg:w-14 h-10 lg:h-14 text-lg lg:text-3xl bg-gray-200 rounded-l-sm">
+            <div className="flex justify-center items-center w-8 md:w-14 h-10 md:h-14 text-lg md:text-3xl bg-gray-200 rounded-l-sm">
               <BsFillEnvelopeFill />
             </div>
             <input
               placeholder="Email"
-              className="w-full font-bold px-3 h-10 lg:h-14 text-gray-800 text-md lg:text-2xl focus:outline-none"
+              className="w-full font-bold px-3 h-10 md:h-14 text-gray-800 text-md md:text-2xl focus:outline-none"
               type="email"
               autoComplete="nope"
               {...register("email", {
@@ -169,7 +178,7 @@ export default function Register() {
               })}
             />
           </div>
-          <div className="text-xs lg:text-xl text-center">
+          <div className="text-xs text-center md:text-lg">
             {errors?.email?.type === "required" && (
               <p className="font-bold">O campo Email é obrigatório.</p>
             )}
@@ -181,39 +190,38 @@ export default function Register() {
 
         <div className="flex flex-col gap-2">
           <div className="border-[3px] justify-center flex items-center rounded-md shadow-md">
-            <div className="flex justify-center items-center w-8 lg:w-14 h-10 lg:h-14 text-lg lg:text-3xl bg-gray-200 rounded-l-sm">
+            <div className="flex justify-center items-center w-8 md:w-14 h-10 md:h-14 text-lg md:text-3xl bg-gray-200 rounded-l-sm">
               <BsKeyFill />
             </div>
             <input
               placeholder="Senha"
-              className="w-full font-bold px-3 h-10 lg:h-14 text-gray-800 text-md lg:text-2xl focus:outline-none"
+              className="w-full font-bold px-3 h-10 md:h-14 text-gray-800 text-md md:text-2xl focus:outline-none"
               type={showPassword ? "text" : "password"}
               autoComplete="nope"
               {...register("password", {
                 required: true,
-                pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#$%^&*()_+]{8,}/,
+                pattern: /^.{8,}$/
               })}
             />
             <button
               type="button"
-              className="flex justify-center items-center w-8 lg:w-14 h-10 lg:h-14 text-lg lg:text-3xl bg-gray-200 rounded-l-sm"
+              className="flex justify-center items-center w-8 md:w-14 h-10 md:h-14 text-lg md:text-3xl bg-gray-200 rounded-l-sm"
               onClick={() => setShowPassword(!showPassword)}
             >
               {showPassword ? (
-                <BsFillEyeSlashFill size={14} />
+                <BsFillEyeSlashFill/>
               ) : (
-                <BsFillEyeFill size={14} />
+                <BsFillEyeFill/>
               )}
             </button>
           </div>
-          <div className="text-xs lg:text-xl text-center">
+          <div className="text-xs text-center  md:text-lg">
             {errors?.password?.type === "required" && (
               <p className="font-bold">O campo Senha é obrigatório.</p>
             )}
             {errors?.password?.type === "pattern" && (
               <p className="font-bold">
-                O campo Senha precisa conter no mínimo 8 caracteres, 1 letra e 1
-                número.
+                O campo Senha precisa conter no mínimo 8 caracteres.
               </p>
             )}
           </div>
@@ -227,11 +235,6 @@ export default function Register() {
           Registrar
         </button>
       </form>
-      <div className="text-md font-bold m-3">
-        {registerServerErrors.map((error) => (
-          <p className="text-center">{error}</p>
-        ))}
-      </div>
     </div>
   );
 }
