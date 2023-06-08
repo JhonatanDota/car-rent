@@ -26,6 +26,7 @@ export default function Login() {
         .then((response) => {
           localStorage.setItem("token", response.token);
           localStorage.setItem("user", JSON.stringify(response.user));
+          window.location.replace("/dashboard")
         })
         .catch((error) => {
           let response = error.response;
