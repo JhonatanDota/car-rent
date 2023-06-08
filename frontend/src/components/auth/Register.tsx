@@ -1,12 +1,25 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { BsPersonFill } from "react-icons/bs";
+import {
+  BsPersonFill,
+  BsFillPersonLinesFill,
+  BsKeyFill,
+  BsFillEnvelopeFill,
+  BsFillEyeFill,
+  BsFillEyeSlashFill,
+} from "react-icons/bs";
 import UserRegisterModel from "../../models/UserRegisterModel";
 import { registerUser } from "./requests";
 import { badRequestErrorsTratative } from "../../functions/exceptions";
+import { Toaster } from "react-hot-toast";
+import { successToast, failToast } from "../../functions/alerts";
 
 export default function Register() {
-  const [registerServerErrors, setRegisterServerErrors] = useState <Array<string>>([]);
+  const [registerServerErrors, setRegisterServerErrors] = useState<
+    Array<string>
+  >([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
 
   const {
     register,
@@ -24,8 +37,11 @@ export default function Register() {
     };
 
     try {
+      setIsLoading(true);
+
       await registerUser(userData)
-        .then(_ => {
+        .then((_) => {
+          successToast("Registrado com Sucesso!");
           setRegisterServerErrors([]);
           reset();
         })
@@ -33,19 +49,25 @@ export default function Register() {
           let response = error.response;
           let statusCode = response.status;
 
-          if(statusCode == 400)
+          if (statusCode == 400) {
+            failToast("Revise os Campos.");
             setRegisterServerErrors(badRequestErrorsTratative(response.data));
-          else
-            console.log("teste")
+          } else
+            failToast("Ocorreu um erro interno, tente novamente mais tarde.");
         });
-    } catch {}
+    } catch {
+      failToast("Ocorreu um erro interno, tente novamente mais tarde.");
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (
     <div className="flex flex-col p-10 w-full">
-      {registerServerErrors.map((error) => (
-        <h1>{error}</h1>
-      ))}
+      <Toaster />
+      <div className="flex flex-col mb-5">
+        <p className="text-xl text-center font-bold">Crie sua conta</p>
+      </div>
       <form
         onSubmit={handleSubmit(onSubmit)}
         action=""
@@ -54,7 +76,7 @@ export default function Register() {
         <div className="flex flex-col gap-2">
           <div className="border-[3px] justify-center flex items-center rounded-md shadow-md ">
             <div className="flex justify-center items-center w-8 lg:w-14 h-10 lg:h-14 text-lg lg:text-3xl bg-gray-200 rounded-l-sm">
-              <BsPersonFill className="text-gray-800" />
+              <BsPersonFill />
             </div>
             <input
               placeholder="Nome"
@@ -69,29 +91,23 @@ export default function Register() {
               })}
             />
           </div>
-          <div className="text-sm lg:text-xl text-center">
+          <div className="text-xs lg:text-xl text-center">
             {errors?.first_name?.type === "required" && (
-              <p>
-                O campo <span className="has-text-weight-bold">Nome</span> é
-                obrigatório.
-              </p>
+              <p className="font-bold">O campo Nome é obrigatório.</p>
             )}
             {errors?.first_name?.type === "pattern" && (
-              <p>
-                O campo <span className="has-text-weight-bold">Nome</span> deve
-                conter apenas letras.
+              <p className="font-bold">
+                O campo Nome deve conter apenas letras.
               </p>
             )}
             {errors?.first_name?.type === "minLength" && (
-              <p>
-                O campo <span className="has-text-weight-bold">Nome</span> deve
-                conter no mínimo 3 caracteres
+              <p className="font-bold">
+                O campo Nome deve conter no mínimo 3 caracteres
               </p>
             )}
             {errors?.first_name?.type === "maxLength" && (
-              <p>
-                O campo <span className="has-text-weight-bold">Nome</span> não
-                deve conter mais que 70 caracteres
+              <p className="font-bold">
+                O campo Nome não deve conter mais que 70 caracteres
               </p>
             )}
           </div>
@@ -100,7 +116,7 @@ export default function Register() {
         <div className="flex flex-col gap-2">
           <div className="border-[3px] justify-center flex items-center rounded-md shadow-md">
             <div className="flex justify-center items-center w-8 lg:w-14 h-10 lg:h-14 text-lg lg:text-3xl bg-gray-200 rounded-l-sm">
-              <BsPersonFill className="text-gray-800" />
+              <BsFillPersonLinesFill />
             </div>
             <input
               placeholder="Sobrenome"
@@ -115,29 +131,23 @@ export default function Register() {
               })}
             />
           </div>
-          <div className="text-sm lg:text-xl text-center">
+          <div className="text-xs lg:text-xl text-center">
             {errors?.last_name?.type === "required" && (
-              <p>
-                O campo <span className="has-text-weight-bold">Sobrenome</span>{" "}
-                é obrigatório.
-              </p>
+              <p className="font-bold">O campo Sobrenome é obrigatório.</p>
             )}
             {errors?.last_name?.type === "pattern" && (
-              <p>
-                O campo <span className="has-text-weight-bold">Sobrenome</span>{" "}
-                deve conter apenas letras.
+              <p className="font-bold">
+                O campo Sobrenome deve conter apenas letras.
               </p>
             )}
             {errors?.last_name?.type === "minLength" && (
-              <p>
-                O campo <span className="has-text-weight-bold">Sobrenome</span>{" "}
-                deve conter no mínimo 3 caracteres
+              <p className="font-bold">
+                O campo Sobrenome deve conter no mínimo 3 caracteres
               </p>
             )}
             {errors?.last_name?.type === "maxLength" && (
-              <p>
-                O campo <span className="has-text-weight-bold">Sobrenome</span>{" "}
-                não deve conter mais que 70 caracteres
+              <p className="font-bold">
+                O campo Sobrenome não deve conter mais que 70 caracteres
               </p>
             )}
           </div>
@@ -146,7 +156,7 @@ export default function Register() {
         <div className="flex flex-col gap-2">
           <div className="border-[3px] justify-center flex items-center rounded-md shadow-md">
             <div className="flex justify-center items-center w-8 lg:w-14 h-10 lg:h-14 text-lg lg:text-3xl bg-gray-200 rounded-l-sm">
-              <BsPersonFill className="text-gray-800" />
+              <BsFillEnvelopeFill />
             </div>
             <input
               placeholder="Email"
@@ -159,17 +169,12 @@ export default function Register() {
               })}
             />
           </div>
-          <div className="text-sm lg:text-xl text-center">
+          <div className="text-xs lg:text-xl text-center">
             {errors?.email?.type === "required" && (
-              <p>
-                O campo <span className="has-text-weight-bold">Email</span> é
-                obrigatório.
-              </p>
+              <p className="font-bold">O campo Email é obrigatório.</p>
             )}
             {errors?.email?.type === "pattern" && (
-              <p>
-                <span className="has-text-weight-bold">Email</span> inválido.
-              </p>
+              <p className="font-bold">Email inválido.</p>
             )}
           </div>
         </div>
@@ -177,30 +182,38 @@ export default function Register() {
         <div className="flex flex-col gap-2">
           <div className="border-[3px] justify-center flex items-center rounded-md shadow-md">
             <div className="flex justify-center items-center w-8 lg:w-14 h-10 lg:h-14 text-lg lg:text-3xl bg-gray-200 rounded-l-sm">
-              <BsPersonFill className="text-gray-800" />
+              <BsKeyFill />
             </div>
             <input
               placeholder="Senha"
               className="w-full font-bold px-3 h-10 lg:h-14 text-gray-800 text-md lg:text-2xl focus:outline-none"
-              type="password"
+              type={showPassword ? "text" : "password"}
               autoComplete="nope"
               {...register("password", {
                 required: true,
                 pattern: /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d!@#$%^&*()_+]{8,}/,
               })}
             />
+            <button
+              type="button"
+              className="flex justify-center items-center w-8 lg:w-14 h-10 lg:h-14 text-lg lg:text-3xl bg-gray-200 rounded-l-sm"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? (
+                <BsFillEyeSlashFill size={14} />
+              ) : (
+                <BsFillEyeFill size={14} />
+              )}
+            </button>
           </div>
-          <div className="text-sm lg:text-xl text-center">
+          <div className="text-xs lg:text-xl text-center">
             {errors?.password?.type === "required" && (
-              <p>
-                O campo <span className="has-text-weight-bold">Senha</span> é
-                obrigatório.
-              </p>
+              <p className="font-bold">O campo Senha é obrigatório.</p>
             )}
             {errors?.password?.type === "pattern" && (
-              <p>
-                O campo <span className="has-text-weight-bold">Senha </span>
-                precisa conter no mínimo 8 caracteres, 1 letra e 1 número.
+              <p className="font-bold">
+                O campo Senha precisa conter no mínimo 8 caracteres, 1 letra e 1
+                número.
               </p>
             )}
           </div>
@@ -209,10 +222,16 @@ export default function Register() {
         <button
           className="bg-emerald-400 float-right text-white font-bold p-2 mt-2 text-lg rounded-lg"
           type="submit"
+          disabled={isLoading}
         >
           Registrar
         </button>
       </form>
+      <div className="text-md font-bold m-3">
+        {registerServerErrors.map((error) => (
+          <p className="text-center">{error}</p>
+        ))}
+      </div>
     </div>
   );
 }
