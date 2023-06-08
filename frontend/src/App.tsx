@@ -1,9 +1,12 @@
 import AppRoutes from './AppRoutes';
+import { UserProvider } from './contexts/UserContext';
 
 function App() {
   return (
     <div>
-      <AppRoutes/>
+      <UserProvider>
+        <AppRoutes/>
+      </UserProvider>
     </div>
   );
 }

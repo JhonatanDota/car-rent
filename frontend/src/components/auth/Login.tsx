@@ -23,7 +23,10 @@ export default function Login() {
 
     try {
       await login(loginData)
-        .then((_) => {})
+        .then((response) => {
+          localStorage.setItem("token", response.token);
+          localStorage.setItem("user", JSON.stringify(response.user));
+        })
         .catch((error) => {
           let response = error.response;
           let statusCode = response.status;
