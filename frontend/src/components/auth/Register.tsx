@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { EMAIL_REGEX, PASSWORD_REGEX, NAME_REGEX } from "../../functions/regexs";
 import {
   BsPersonFill,
   BsFillPersonLinesFill,
@@ -67,13 +68,15 @@ export default function Register() {
     <div className="flex flex-col p-8 w-full">
       <Toaster />
       <div className="flex flex-col mb-4">
-        <p className="text-xl md:text-3xl text-center font-bold">Crie sua conta</p>
+        <p className="text-xl md:text-3xl text-center font-bold">
+          Crie sua conta
+        </p>
       </div>
       <div className="text-md font-bold m-3 md:text-lg">
         {registerServerErrors.map((error) => (
           <div className="flex justify-center items-center gap-x-2">
             <p className="text-center">{error}</p>
-            <BsFillExclamationCircleFill color="red"/>
+            <BsFillExclamationCircleFill color="red" />
           </div>
         ))}
       </div>
@@ -94,7 +97,7 @@ export default function Register() {
               autoComplete="nope"
               {...register("first_name", {
                 required: true,
-                pattern: /^[a-zA-ZÀ-ÿ ]+$/i,
+                pattern: NAME_REGEX,
                 minLength: 3,
                 maxLength: 70,
               })}
@@ -134,7 +137,7 @@ export default function Register() {
               autoComplete="nope"
               {...register("last_name", {
                 required: true,
-                pattern: /^[a-zA-ZÀ-ÿ ]+$/i,
+                pattern: NAME_REGEX,
                 minLength: 3,
                 maxLength: 70,
               })}
@@ -174,7 +177,7 @@ export default function Register() {
               autoComplete="nope"
               {...register("email", {
                 required: true,
-                pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                pattern: EMAIL_REGEX,
               })}
             />
           </div>
@@ -200,7 +203,7 @@ export default function Register() {
               autoComplete="nope"
               {...register("password", {
                 required: true,
-                pattern: /^.{8,}$/
+                pattern: PASSWORD_REGEX,
               })}
             />
             <button
@@ -208,11 +211,7 @@ export default function Register() {
               className="flex justify-center items-center w-8 md:w-14 h-10 md:h-14 text-lg md:text-3xl bg-gray-200 rounded-l-sm"
               onClick={() => setShowPassword(!showPassword)}
             >
-              {showPassword ? (
-                <BsFillEyeSlashFill/>
-              ) : (
-                <BsFillEyeFill/>
-              )}
+              {showPassword ? <BsFillEyeSlashFill /> : <BsFillEyeFill />}
             </button>
           </div>
           <div className="text-xs text-center  md:text-lg">
